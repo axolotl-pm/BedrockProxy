@@ -1,0 +1,9 @@
+/vendor/
+/.idea/
+/.php-cs-fixer.cache
+/config.yml
+/sessions/
+/proxy-identity.pem
+/*.log
+/log_archive/
+data/

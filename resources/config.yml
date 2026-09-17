@@ -1,0 +1,79 @@
+## Settings for the side of the proxy that game clients connect to.
+proxy:
+  ## Address the signaling listeners bind to.
+  bind-address: 0.0.0.0
+  ## 64-bit NetherNet network ID announced on the LAN. 0 derives a stable ID from the identity key.
+  network-id: 0
+  ## LAN discovery (UDP). This is how the vanilla client finds the proxy in its LAN games list.
+  lan:
+    enabled: true
+    port: 7551
+  ## HTTP signaling (TCP), the direct-connect endpoint used by NetherNet-aware clients.
+  http:
+    enabled: true
+    port: 19132
+  ## Names shown in the LAN games list. Leave empty to mirror the destination server.
+  server-name: ""
+  level-name: ""
+  ## P-384 private key (PEM) that identifies the proxy to clients and to the destination server.
+  ## It is generated on first start if the file does not exist.
+  identity-key: proxy-identity.pem
+  ## Force the ICE candidates of the proxy to a single local address. Empty gathers on every interface.
+  ice-bind-address: ""
+
+## Destination server the client will be connected to.
+## Login data is passed through unchanged, so the destination must accept the client's own
+## credentials, i.e. it must run in offline mode (online-mode=false / xbox-auth=false).
+destination:
+  ## lan: reach the server through LAN discovery on UDP (vanilla worlds, dedicated servers, PocketMine).
+  ## http: reach the server through its HTTP signaling endpoint (POST /v1/join).
+  signaling: lan
+  ## lan: IP address of the server, or a broadcast address to take the first server that answers.
+  ## http: base URL of the server such as http://127.0.0.1:19132
+  address: 255.255.255.255
+  ## lan only: UDP port of the server's LAN discovery listener.
+  port: 7551
+  ## lan only: network ID of the server. 0 accepts the first server that answers at the address.
+  network-id: 0
+  ## Seconds to wait for a connection to the destination before giving up on a client.
+  timeout: 15
+
+## Stand in the middle of Minecraft packet encryption instead of passing it through.
+## Leave this off for NetherNet. A server still sends an encryption handshake, but neither end encrypts
+## anything after it, so the packet log stays readable with the handshake simply relayed.
+## Turn it on only for a destination that really does encrypt. The proxy then presents its own key to each
+## side, which means the login is re-signed and the destination must accept unauthenticated players.
+decrypt-packets: false
+
+## Extract the item registry, recipes and creative contents the destination announces into the files
+## bedrock-data keeps them in (required_item_list.json, recipes/, creative/).
+## The dump is written once per session, so a single join is enough.
+extract-data: false
+## Where those files go, relative to this configuration.
+data-path: data
+
+## Log packets for each session
+log-packets: true
+## Where to log packet data
+## Valid options: console, file or both
+log-to: file
+
+## Name the block state behind every block network ID in the log, next to the ID itself.
+## How a server numbers block states decides how an ID is read back:
+##   auto    - take the answer from the StartGame packet of the server (recommended)
+##   runtime - the ID is an index into the block palette
+##   hashed  - the ID is a hash of the block state, as sent when block network IDs are hashes
+## Custom blocks announced in StartGame are added to the palette, so they are named as well.
+## States are resolved against the block palette this proxy ships with, so a destination on another game
+## version can be named wrongly in runtime mode. The raw ID is always kept.
+block-states: auto
+
+## Packets to ignore to make your log more refined. These default packets are generally spammed
+ignored-packets:
+  - NetworkStackLatencyPacket
+  - LevelChunkPacket
+  - MovePlayerPacket
+  - PlayerAuthInputPacket
+  - NetworkChunkPublisherUpdatePacket
+  - ClientCacheBlobStatusPacket
+  - ClientCacheMissResponsePacket
