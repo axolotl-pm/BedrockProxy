@@ -1,12 +1,13 @@
 # BedrockProxy
 
-A lightweight Minecraft: Bedrock Edition man-in-the-middle (MITM) proxy written in PHP, built on top of [PocketMine-MP](https://github.com/axolotl-pm/pocketmine-mp) and NetherNet libraries. Primarily designed for protocol research, packet inspection, and extracting game data against Bedrock Dedicated Server (BDS).
+A lightweight Minecraft: Bedrock Edition man-in-the-middle (MITM) proxy written in PHP, built on top of the [BedrockProtocol](https://github.com/axolotl-pm/BedrockProtocol) and NetherNet libraries. Primarily designed for protocol research, packet inspection, and extracting game data against Bedrock Dedicated Server (BDS).
 
 ## Requirements
 
 - PHP 8.1 or newer (64-bit)
 - Composer
 - PHP Extensions:
+  - `ext-crypto`
   - `ext-curl`
   - `ext-encoding`
   - `ext-gmp`

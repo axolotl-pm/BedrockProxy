@@ -15,7 +15,7 @@ declare(strict_types=1);
 namespace pocketmine\bedrockproxy\packet;
 
 use pmmp\encoding\ByteBufferWriter;
-use pocketmine\network\mcpe\compression\ZlibCompressor;
+use pocketmine\bedrockproxy\network\compression\ZlibCompressor;
 use pocketmine\network\mcpe\protocol\Packet;
 use pocketmine\network\mcpe\protocol\serializer\PacketBatch;
 use pocketmine\network\mcpe\protocol\types\CompressionAlgorithm;

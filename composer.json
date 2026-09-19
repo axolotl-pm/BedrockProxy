@@ -5,6 +5,7 @@
     "require": {
         "php": "^8.1",
         "php-64bit": "*",
+        "ext-crypto": "*",
         "ext-curl": "*",
         "ext-encoding": "~1.0.0",
         "ext-gmp": "*",
@@ -15,11 +16,13 @@
         "ext-webrtc": "*",
         "ext-yaml": "*",
         "ext-zlib": "*",
-        "axolotl-pm/pocketmine-mp": "^5.48",
-        "axolotl-pm/bedrock-protocol": "dev-bedrock-1.26.50 as 61.0.0+bedrock-1.26.45",
+        "axolotl-pm/bedrock-protocol": "~62.0.0+bedrock-1.26.50",
+        "axolotl-pm/bedrock-data": "^6.9.0+bedrock-1.26.50",
         "axolotl-pm/nethernet": "dev-master",
-        "axolotl-pm/bedrock-data": "dev-bedrock-1.26.50 as 6.8.0+bedrock-1.26.40",
-        "pocketmine/log": "^0.4.0"
+        "pocketmine/binaryutils": "^0.2.7",
+        "pocketmine/log": "^0.4.0",
+        "pocketmine/nbt": "^1.2",
+        "symfony/filesystem": "^6.4"
     },
     "require-dev": {
         "phpstan/phpstan": "^2.2",

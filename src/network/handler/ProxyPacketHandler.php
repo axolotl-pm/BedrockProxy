@@ -15,7 +15,8 @@ declare(strict_types=1);
 namespace pocketmine\bedrockproxy\network\handler;
 
 use pocketmine\bedrockproxy\network\ProxySession;
-use pocketmine\network\mcpe\handler\PacketHandler;
+use pocketmine\network\mcpe\protocol\PacketHandlerDefaultImplTrait;
+use pocketmine\network\mcpe\protocol\PacketHandlerInterface;
 
 /**
  * Base packet handler for a directional relayed session.
@@ -23,9 +24,18 @@ use pocketmine\network\mcpe\handler\PacketHandler;
  * Returning true from a handler method indicates the packet was consumed by the handler. Packets
  * are relayed byte-for-byte by default unless explicitly modified or suppressed by the session.
  */
-abstract class ProxyPacketHandler extends PacketHandler{
+abstract class ProxyPacketHandler implements PacketHandlerInterface{
+	use PacketHandlerDefaultImplTrait;
 
 	public function __construct(
 		protected readonly ProxySession $session
 	){}
+
+	/**
+	 * Called once the handler has been installed on the session, so that it can send whatever the new state owes
+	 * the other side before any packet arrives.
+	 */
+	public function setUp() : void{
+
+	}
 }

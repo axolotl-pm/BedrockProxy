@@ -14,8 +14,8 @@ declare(strict_types=1);
 
 namespace pocketmine\bedrockproxy\network\handler;
 
-use pocketmine\network\mcpe\JwtException;
-use pocketmine\network\mcpe\JwtUtils;
+use pocketmine\bedrockproxy\network\encryption\JwtException;
+use pocketmine\bedrockproxy\network\encryption\JwtUtils;
 use pocketmine\network\mcpe\protocol\ClientToServerHandshakePacket;
 use pocketmine\network\mcpe\protocol\DisconnectPacket;
 use pocketmine\network\mcpe\protocol\LoginPacket;

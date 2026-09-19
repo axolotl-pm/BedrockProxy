@@ -14,23 +14,23 @@ declare(strict_types=1);
 
 namespace pocketmine\bedrockproxy;
 
-use pocketmine\utils\MainLogger;
-use pocketmine\utils\Terminal;
+use pocketmine\bedrockproxy\logging\ConsoleLogger;
 use Symfony\Component\Filesystem\Path;
 use function count;
-use function date_default_timezone_get;
 use function extension_loaded;
 use function fwrite;
 use function getcwd;
 use function implode;
 use function is_string;
+use function stream_isatty;
 use function version_compare;
 use const PHP_EOL;
 use const PHP_INT_SIZE;
 use const PHP_VERSION;
 use const STDERR;
+use const STDOUT;
 
-require_once __DIR__ . "/bootstrap.php";
+require_once __DIR__ . "/../vendor/autoload.php";
 
 /**
  * @return string[]
@@ -44,7 +44,7 @@ function checkRequirements() : array{
 	if(PHP_INT_SIZE < 8){
 		$problems[] = "A 64-bit PHP build is required";
 	}
-	foreach(["curl", "encoding", "json", "openssl", "pcntl", "sockets", "webrtc", "yaml", "zlib"] as $extension){
+	foreach(["crypto", "curl", "encoding", "gmp", "json", "openssl", "pcntl", "sockets", "webrtc", "yaml", "zlib"] as $extension){
 		if(!extension_loaded($extension)){
 			$problems[] = "The $extension extension is required";
 		}
@@ -62,12 +62,9 @@ if(count($problems) > 0){
 $cwd = getcwd();
 $dataPath = $argv[1] ?? (is_string($cwd) ? $cwd : ".");
 
-Terminal::init();
-$logger = new MainLogger(
+$logger = new ConsoleLogger(
 	logFile: Path::join($dataPath, "proxy.log"),
-	useFormattingCodes: Terminal::hasFormattingCodes(),
-	mainThreadName: "Proxy",
-	timezone: new \DateTimeZone(date_default_timezone_get()),
+	useFormattingCodes: stream_isatty(STDOUT),
 	logDebug: true
 );
 
@@ -76,8 +73,8 @@ try{
 	$proxy->start();
 }catch(\Throwable $e){
 	$logger->logException($e);
-	$logger->shutdownLogWriterThread();
+	$logger->close();
 	exit(1);
 }
 
-$logger->shutdownLogWriterThread();
+$logger->close();

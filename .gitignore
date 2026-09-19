@@ -6,4 +6,4 @@
 /proxy-identity.pem
 /*.log
 /log_archive/
-data/
+/data/

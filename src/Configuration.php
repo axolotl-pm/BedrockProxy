@@ -16,7 +16,7 @@ namespace pocketmine\bedrockproxy;
 
 use pocketmine\bedrockproxy\logging\LogTarget;
 use pocketmine\bedrockproxy\packet\BlockStateIdMode;
-use pocketmine\utils\Config;
+use pocketmine\bedrockproxy\utils\Config;
 use function get_debug_type;
 use function is_array;
 use function is_bool;
@@ -80,7 +80,7 @@ final class Configuration{
 	 * @throws ConfigurationException
 	 */
 	public static function load(string $path) : self{
-		$config = new Config($path, Config::YAML);
+		$config = new Config($path);
 
 		$iceBindAddress = self::string($config, "proxy.ice-bind-address", "");
 		$ignoredPackets = [];

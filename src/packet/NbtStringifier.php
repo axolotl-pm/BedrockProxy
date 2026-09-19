@@ -14,6 +14,7 @@ declare(strict_types=1);
 
 namespace pocketmine\bedrockproxy\packet;
 
+use pocketmine\bedrockproxy\utils\Utils;
 use pocketmine\nbt\tag\ByteArrayTag;
 use pocketmine\nbt\tag\ByteTag;
 use pocketmine\nbt\tag\CompoundTag;
@@ -26,7 +27,6 @@ use pocketmine\nbt\tag\LongTag;
 use pocketmine\nbt\tag\ShortTag;
 use pocketmine\nbt\tag\StringTag;
 use pocketmine\nbt\tag\Tag;
-use pocketmine\utils\Utils;
 use function addcslashes;
 use function bin2hex;
 use function implode;

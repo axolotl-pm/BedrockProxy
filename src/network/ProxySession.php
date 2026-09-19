@@ -18,6 +18,9 @@ use pocketmine\bedrockproxy\data\DataExtractionException;
 use pocketmine\bedrockproxy\data\DataExtractor;
 use pocketmine\bedrockproxy\logging\SessionLogger;
 use pocketmine\bedrockproxy\network\client\ClientNegotiation;
+use pocketmine\bedrockproxy\network\compression\ZlibCompressor;
+use pocketmine\bedrockproxy\network\encryption\DecryptionException;
+use pocketmine\bedrockproxy\network\encryption\EncryptionContext;
 use pocketmine\bedrockproxy\network\handler\ClientPacketHandler;
 use pocketmine\bedrockproxy\network\handler\ProxyPacketHandler;
 use pocketmine\bedrockproxy\network\handler\ServerPacketHandler;
@@ -30,20 +33,17 @@ use pocketmine\bedrockproxy\packet\InspectedPacket;
 use pocketmine\bedrockproxy\packet\InspectionException;
 use pocketmine\bedrockproxy\packet\PacketDumper;
 use pocketmine\bedrockproxy\packet\PacketInspector;
+use pocketmine\bedrockproxy\utils\Utils;
 use pocketmine\nethernet\NetherNetException;
 use pocketmine\nethernet\session\DisconnectReason;
 use pocketmine\nethernet\session\Reliability;
 use pocketmine\nethernet\session\Session;
-use pocketmine\network\mcpe\compression\ZlibCompressor;
-use pocketmine\network\mcpe\encryption\DecryptionException;
-use pocketmine\network\mcpe\encryption\EncryptionContext;
 use pocketmine\network\mcpe\protocol\ClientToServerHandshakePacket;
 use pocketmine\network\mcpe\protocol\LoginPacket;
 use pocketmine\network\mcpe\protocol\Packet;
 use pocketmine\network\mcpe\protocol\PacketPool;
 use pocketmine\network\mcpe\protocol\ServerToClientHandshakePacket;
 use pocketmine\network\mcpe\protocol\types\BlockPaletteEntry;
-use pocketmine\utils\Utils;
 use function bin2hex;
 use function count;
 use function implode;
@@ -283,7 +283,7 @@ final class ProxySession{
 	}
 
 	private static function canBeEncrypted(string $payload) : bool{
-		return strlen($payload) >= EncryptionBridge::MIN_ENCRYPTED_LENGTH;
+		return strlen($payload) >= EncryptionContext::MIN_ENCRYPTED_LENGTH;
 	}
 
 	private function wrap(string $batch, ?EncryptionContext $cipher) : string{

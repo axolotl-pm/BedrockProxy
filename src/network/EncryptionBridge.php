@@ -14,10 +14,10 @@ declare(strict_types=1);
 
 namespace pocketmine\bedrockproxy\network;
 
-use pocketmine\network\mcpe\encryption\EncryptionContext;
-use pocketmine\network\mcpe\encryption\EncryptionUtils;
-use pocketmine\network\mcpe\JwtException;
-use pocketmine\network\mcpe\JwtUtils;
+use pocketmine\bedrockproxy\network\encryption\EncryptionContext;
+use pocketmine\bedrockproxy\network\encryption\EncryptionUtils;
+use pocketmine\bedrockproxy\network\encryption\JwtException;
+use pocketmine\bedrockproxy\network\encryption\JwtUtils;
 use pocketmine\network\mcpe\protocol\LoginPacket;
 use pocketmine\network\mcpe\protocol\types\login\AuthenticationType;
 use function base64_decode;
@@ -34,7 +34,6 @@ use const JSON_UNESCAPED_SLASHES;
 
 final class EncryptionBridge{
 
-	public const MIN_ENCRYPTED_LENGTH = 9;
 	private const TOKEN_LIFETIME = 86400;
 	private const CLAIM_PUBLIC_KEY = "cpk";
 

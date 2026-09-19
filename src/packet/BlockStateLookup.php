@@ -15,17 +15,17 @@ declare(strict_types=1);
 namespace pocketmine\bedrockproxy\packet;
 
 use Composer\InstalledVersions;
-use pocketmine\data\bedrock\block\BlockStateData;
+use pocketmine\bedrockproxy\data\bedrock\BlockStateData;
+use pocketmine\bedrockproxy\data\bedrock\BlockStateDictionary;
+use pocketmine\bedrockproxy\data\bedrock\BlockStateDictionaryEntry;
+use pocketmine\bedrockproxy\utils\Filesystem;
+use pocketmine\bedrockproxy\utils\Utils;
 use pocketmine\nbt\LittleEndianNbtSerializer;
 use pocketmine\nbt\tag\CompoundTag;
 use pocketmine\nbt\tag\Tag;
 use pocketmine\nbt\TreeRoot;
-use pocketmine\network\mcpe\convert\BlockStateDictionary;
-use pocketmine\network\mcpe\convert\BlockStateDictionaryEntry;
 use pocketmine\network\mcpe\protocol\types\BlockPaletteEntry;
 use pocketmine\utils\Binary;
-use pocketmine\utils\Filesystem;
-use pocketmine\utils\Utils;
 use Symfony\Component\Filesystem\Path;
 use function array_keys;
 use function count;
@@ -207,10 +207,6 @@ final class BlockStateLookup{
 		return $this->descriptionCache[$networkId] = self::render($state);
 	}
 
-	/**
-	 * Returns the state behind a block network ID as the server numbered it, or null if the palette has nothing
-	 * under that ID.
-	 */
 	public function resolve(int $networkId) : ?BlockStateData{
 		if($this->mode !== BlockStateIdMode::HASHED){
 			$state = $this->dictionary->generateDataFromStateId($networkId);
