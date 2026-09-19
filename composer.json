@@ -6,10 +6,12 @@
         "php": "^8.1",
         "php-64bit": "*",
         "ext-crypto": "*",
+        "ext-ctype": "*",
         "ext-curl": "*",
         "ext-encoding": "~1.0.0",
         "ext-gmp": "*",
         "ext-json": "*",
+        "ext-mbstring": "*",
         "ext-openssl": "*",
         "ext-pcntl": "*",
         "ext-sockets": "*",
@@ -28,9 +30,18 @@
         "phpstan/phpstan": "^2.2",
         "friendsofphp/php-cs-fixer": "^3.95"
     },
+    "replace": {
+        "symfony/polyfill-ctype": "*",
+        "symfony/polyfill-mbstring": "*"
+    },
     "autoload": {
         "psr-4": {
             "pocketmine\\bedrockproxy\\": "src/"
+        }
+    },
+    "config": {
+        "platform": {
+            "php": "8.1.0"
         }
     },
     "scripts": {
